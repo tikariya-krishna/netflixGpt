@@ -68,3 +68,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+
+
+# Create an apllication, now authenticate user
+    -for User Backend we use Fire base.
+    -Go to Fire base and create project.
+    -Then go to web and create app.
+
+    For deloy if you are not login or when you try to login or get error use thi "npx firebase-tools login"
