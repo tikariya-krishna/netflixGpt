@@ -1,11 +1,19 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { signOut } from "firebase/auth";
 import { auth } from "../utlis/firebase.js";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utlis/redux/userSlice.js";
+import { removeUser } from "../utlis/redux/userSlice.js";
+import { LOGO } from "../utlis/constent.js";
+import { SIGNOUTICON } from "../utlis/constent.js";
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const user = useSelector((store)=> store.user);
   
   const toggleDropdown = () => {
@@ -14,26 +22,38 @@ const Header = () => {
 
   const handelSignOut = () => {
     signOut(auth).then(() => {
-      // Sign-out successful.
-      navigate("/");
     }).catch((error) => {
-      // An error happened.
-      navigate("/error");
     });
   }
 
 
+  useEffect(()=>{
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid , email, displayName } = user;
+        dispatch(addUser({ uid:uid, email:email, displayName:displayName }) )
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+
+    return () => unsubscribe();
+  },[]);
+
+
   return (
     <>
-    <div className='absolute w-screen z-40 pt-5 px-24'>
+    <div className='absolute w-full z-40 pt-5 px-20 bg-gradient-to-t to-black/80 from-transparent'>
       <div className='flex justify-between items-center'>
-        <img src='https://images.ctfassets.net/y2ske730sjqp/821Wg4N9hJD8vs5FBcCGg/9eaf66123397cc61be14e40174123c40/Vector__3_.svg?w=460' className='w-40' alt='Logo'/>
+        <img src={LOGO} className='w-40' alt='Logo'/>
 
         {user && 
         <div className='relative'>
           <div className='flex cursor-pointer' onClick={toggleDropdown}>
-            <img src='https://i.pinimg.com/736x/91/86/1b/91861b749841221d52122f0c2933d8a6.jpg' alt='Sign out logo' className='w-[32px] h-[32px] rounded-lg'/>
-            <i className="fa-solid fa-caret-down my-auto"></i>
+            <img src={SIGNOUTICON} alt='Sign out logo' className='w-[32px] h-[32px] rounded-lg'/>
+            <i className={`fa-solid fa-caret-${isDropdownOpen === true ? "up" : "down"} my-auto`}></i>
           </div>
         
 
