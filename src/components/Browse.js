@@ -5,20 +5,22 @@ import SecendryContainer from './SecendryContainer';
 import usePopulerMovies from '../hooks/usePopulerMovies';
 import useTopMovies from '../hooks/useTopMovies';
 import useUpcomingMovies from '../hooks/useUpcomingMovies'
+import { useSelector } from 'react-redux';
+import GptSearch from './GptSearch';
 
 const Browse = () => {
   usePeopleList();
   usePopulerMovies();
   useTopMovies();
   useUpcomingMovies();
-
+ const gptSearch = useSelector((store)=> store.gpt?.showGptSearch )
+ 
 
   return (
     <>
-      <div className='bg-black text-white'>
+      <div className=' text-white'>
         <Header/>
-        <MainContainer/>
-        <SecendryContainer/>
+        {gptSearch === true ? <GptSearch/> : <> <MainContainer/> <SecendryContainer/> </>}
       </div>
     </>
   )

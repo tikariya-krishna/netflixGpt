@@ -8,7 +8,7 @@ const SecendryContainer = () => {
   const topRated = useSelector((state) => state.movies?.topRated);
   const upcoming = useSelector((state) => state.movies?.upcoming);    
   if(!movies) return;
-  console.log(movies);
+  
   return (
     <>
   <div className=''>

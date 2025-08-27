@@ -4,6 +4,7 @@ import Header from './Header.js';
 import { validation } from '../utlis/validation.js';
 import { auth } from '../utlis/firebase.js';
 import { addUser } from '../utlis/redux/userSlice.js';
+import { BGURL } from '../utlis/constent.js';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 const Login = () => {
@@ -65,7 +66,7 @@ const Login = () => {
   return (
     <>
     <Header/>
-    <div className='absolute bg-center bg-cover w-full h-full' style={{ backgroundImage: "url('https://assets.nflxext.com/ffe/siteui/vlv3/3e4bd046-85a3-40e1-842d-fa11cec84349/web/IN-en-20250818-TRIFECTA-perspective_4bd1b66d-bbb6-4bc6-ba8f-ecbba53a1278_large.jpg')"}}>
+    <div className='absolute bg-center bg-cover w-full h-full' style={{ backgroundImage: `url(${BGURL})`}}>
     </div>
     <div className='bg-black/50 w-full h-full absolute z-10'></div>
 
